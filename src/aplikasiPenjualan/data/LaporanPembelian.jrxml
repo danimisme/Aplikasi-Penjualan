@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="53241a2e-c69e-4fbe-9a09-9f5f228ea593">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="tgl_awal" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="tgl_akhir" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     pembelian.`noBL` AS pembelian_NoBL,
+     pembelian.`tanggal` AS pembelian_Tanggal,
+     pembelian.`IDSupp` AS pembelian_IDSupplier,
+     pembelian.`totalBeli` AS pembelian_TotalBeli,
+     supplier.`namaSupp` AS supplier_NamaSupplier
+FROM
+     `pembelian` pembelian INNER JOIN `supplier` supplier ON pembelian.`IDSupp` = supplier.`IDSupp`
+where
+pembelian.`tanggal` between $P{tgl_awal} and $P{tgl_akhir}]]>
+	</queryString>
+	<field name="pembelian_NoBL" class="java.lang.String"/>
+	<field name="pembelian_Tanggal" class="java.sql.Date"/>
+	<field name="pembelian_IDSupplier" class="java.lang.String"/>
+	<field name="pembelian_TotalBeli" class="java.math.BigDecimal"/>
+	<field name="supplier_NamaSupplier" class="java.lang.String"/>
+	<variable name="pembelian_TotalBeli_1" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{pembelian_TotalBeli}]]></variableExpression>
+	</variable>
+	<variable name="pembelian_TotalBeli_2" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{pembelian_TotalBeli}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="128" splitType="Stretch">
+			<staticText>
+				<reportElement x="143" y="92" width="312" height="20" uuid="86f9d973-9265-4804-b553-cb1841973037"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Telp : (021) 623 02395/ 96 Fax : 62302397]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="143" y="13" width="312" height="31" uuid="2fa93363-3130-4c17-ade9-737ace7d9d7b"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NIRWANA KOMPUTINDO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="143" y="72" width="312" height="20" uuid="4ae783cd-450d-4c6f-9222-6a54bc85b1d5"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Jl. Mangga Dua Raya, Jakarta Pusat 10730]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="143" y="54" width="312" height="18" uuid="3fa7448e-31df-4fb5-b12e-e32fb3b8883e"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Mangga Dua Mall Lt. 4 Blok A No. 38]]></text>
+			</staticText>
+			<image>
+				<reportElement x="26" y="13" width="88" height="82" uuid="fd938f6a-eb9d-42a1-9552-e2bd8a4b32a7"/>
+				<imageExpression><![CDATA["C:\\Users\\msubh\\OneDrive\\Documents\\NetBeansProjects\\Sistem Penjualan\\src\\images\\logo-nk.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="66" splitType="Stretch">
+			<line>
+				<reportElement x="1" y="59" width="555" height="1" uuid="9cbbfd9f-00a9-4835-9915-fb810d692fa0"/>
+			</line>
+			<line>
+				<reportElement x="1" y="13" width="555" height="1" uuid="706335c5-b14d-4326-9a4b-2746333613c6"/>
+			</line>
+			<staticText>
+				<reportElement x="40" y="20" width="193" height="34" forecolor="#006699" backcolor="#006699" uuid="13915c2c-77d7-4fdd-8bcb-63306cda6a42"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LAPORAN PEMBELIAN]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="7" width="555" height="1" uuid="e67c0f6c-77a1-43e6-821a-ee43c42045ce"/>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="26" splitType="Stretch">
+			<staticText>
+				<reportElement x="2" y="1" width="72" height="20" uuid="6337b51b-54d1-4c63-874a-c305ba42b57e"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tanggal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="79" y="1" width="105" height="20" uuid="2d182f59-b5ce-4ff5-8c8e-85091db8a77b"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nomor Pembelian]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="190" y="1" width="69" height="20" uuid="0ac05448-e4fe-4469-ac18-ece6f4620083"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID Supplier]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="269" y="1" width="182" height="20" uuid="bbb70454-8615-4eb2-a07a-2fc102e57fe3"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nama Suplier]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="455" y="1" width="99" height="20" uuid="546711f5-9c2b-4a4d-8231-96653dd0131e"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="1" y="0" width="72" height="20" uuid="9bb64e80-c68b-467c-8951-2aa95a568353"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pembelian_Tanggal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="79" y="0" width="105" height="20" uuid="9724dbb6-6abb-42f6-8768-4ed80076a292"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pembelian_NoBL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="190" y="0" width="69" height="20" uuid="8b792ed6-7f51-4836-abfc-d216af254c81"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pembelian_IDSupplier}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="269" y="0" width="182" height="20" uuid="193499e1-964b-4c45-aba8-88512f77ead5"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{supplier_NamaSupplier}]]></textFieldExpression>
+			</textField>
+			<textField pattern="Rp #,##0">
+				<reportElement x="455" y="0" width="101" height="20" uuid="c67dbb79-d24d-40b8-84e2-55a558dda717"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pembelian_TotalBeli}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="205" splitType="Stretch">
+			<staticText>
+				<reportElement x="346" y="81" width="172" height="114" uuid="98f202ee-5930-46cf-9cf5-c7ee4512aa7a"/>
+				<textElement textAlignment="Center">
+					<font size="13"/>
+				</textElement>
+				<text><![CDATA[Mengetahui,
+Kepala Toko]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="346" y="168" width="172" height="27" uuid="501d1e2e-8219-41b5-a2b1-29221f57c945"/>
+				<textElement textAlignment="Center">
+					<font size="13" isBold="true" isItalic="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Nirwana  Komputindo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="358" y="55" width="64" height="20" uuid="a33ab67f-60f7-431e-a2c7-ccbfd44db5ab"/>
+				<textElement>
+					<font size="13"/>
+				</textElement>
+				<text><![CDATA[Jakarta,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="351" y="3" width="63" height="20" uuid="288ef45d-5114-4339-aa4f-b9d426699b91"/>
+				<textElement>
+					<font fontName="Serif" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL :]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="401" y="55" width="115" height="20" uuid="aeac59d5-fc15-4b1a-a77d-6c40d505c82c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="Rp #,##0">
+				<reportElement x="414" y="3" width="100" height="20" uuid="c3408470-1f70-4486-9bee-77382f9fb652"/>
+				<textElement>
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{pembelian_TotalBeli_2}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="36" splitType="Stretch">
+			<textField>
+				<reportElement mode="Opaque" x="2" y="9" width="515" height="13" backcolor="#E6E6E6" uuid="701e6b29-0e3f-45b9-b2a0-43ae89204da8"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="517" y="9" width="40" height="13" backcolor="#E6E6E6" uuid="2bed8589-0ca5-4b9d-870a-de5fe4c0486b"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

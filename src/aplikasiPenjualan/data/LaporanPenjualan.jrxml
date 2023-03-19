@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9e7729b7-6194-4dff-bc52-098d1c4950c3">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0EFEF"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="tgl_awal" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="tgl_akhir" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     penjualan.`noInv` AS penjualan_NoInvoice,
+     penjualan.`tanggal` AS penjualan_Tanggal,
+     penjualan.`IDCust` AS penjualan_IDCustomer,
+     penjualan.`totalJual` AS penjualan_TotalBeli,
+     customer.`namaCust` AS customer_NamaCustomer
+FROM
+     `penjualan` penjualan INNER JOIN `customer` customer ON penjualan.`IDCust` = customer.`IDCust`
+where
+penjualan.`tanggal` between $P{tgl_awal} and $P{tgl_akhir}]]>
+	</queryString>
+	<field name="penjualan_NoInvoice" class="java.lang.String"/>
+	<field name="penjualan_Tanggal" class="java.sql.Date"/>
+	<field name="penjualan_IDCustomer" class="java.lang.String"/>
+	<field name="penjualan_TotalBeli" class="java.math.BigDecimal"/>
+	<field name="customer_NamaCustomer" class="java.lang.String"/>
+	<variable name="SUM" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{penjualan_TotalBeli}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="128" splitType="Stretch">
+			<staticText>
+				<reportElement x="143" y="19" width="312" height="31" uuid="bb8499d1-3aca-49aa-bfcc-eca609e969ba"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NIRWANA KOMPUTINDO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="143" y="60" width="312" height="18" uuid="f3cdfb8f-710b-4d8b-872d-7651f10df6af"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Mangga Dua Mall Lt. 4 Blok A No. 38]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="143" y="78" width="312" height="20" uuid="0f80dae0-6e4e-4281-be0c-69225d5d4217"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Jl. Mangga Dua Raya, Jakarta Pusat 10730]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="143" y="98" width="312" height="20" uuid="ebf04b0e-fd68-499a-95f8-5405b568cd82"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Telp : (021) 623 02395/ 96 Fax : 62302397]]></text>
+			</staticText>
+			<image>
+				<reportElement x="40" y="19" width="88" height="82" uuid="e5196ff1-c6a4-4f81-9699-a2e8bf830fd7"/>
+				<imageExpression><![CDATA["C:\\Users\\msubh\\OneDrive\\Documents\\NetBeansProjects\\Sistem Penjualan\\src\\images\\logo-nk.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="82">
+			<line>
+				<reportElement x="1" y="5" width="555" height="1" uuid="40029e78-0c51-4575-8500-381a767af869"/>
+			</line>
+			<line>
+				<reportElement x="1" y="11" width="555" height="1" uuid="19dea27b-b89f-445c-bc43-579abd776c75"/>
+			</line>
+			<staticText>
+				<reportElement x="40" y="18" width="193" height="34" forecolor="#006699" backcolor="#006699" uuid="c76e43d0-c2b5-4104-8774-9f20259c1b43"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LAPORAN PENJUALAN]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="57" width="555" height="1" uuid="dd8236e3-efc3-45fb-ae27-44d2737e1842"/>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="26" splitType="Stretch">
+			<staticText>
+				<reportElement style="Column header" x="0" y="7" width="88" height="18" forecolor="#000000" uuid="86c983c2-deb9-41c6-88be-3b7b56548600"/>
+				<textElement>
+					<font fontName="Serif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tanggal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="88" y="7" width="92" height="18" forecolor="#000000" uuid="a753d946-4d00-42bd-9483-c3e10a6da207"/>
+				<textElement>
+					<font fontName="Serif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[No Invoice]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="180" y="7" width="85" height="18" forecolor="#000000" uuid="5f1504d3-4ed6-41f1-b392-b2ec6f62d859"/>
+				<textElement>
+					<font fontName="Serif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID Customer]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="265" y="7" width="179" height="18" forecolor="#000000" uuid="dfef92b6-ae64-4b7c-bbf5-9a235647cf45"/>
+				<textElement>
+					<font fontName="Serif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nama Customer]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="444" y="7" width="111" height="18" forecolor="#000000" uuid="2c6c88cb-7fb9-4ee0-9bb3-d18b5dd10253"/>
+				<textElement>
+					<font fontName="Serif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="555" height="18" uuid="44f1ab4e-24c2-4e79-a745-2ad99bb405f9"/>
+				<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
+					<reportElement style="Detail" positionType="Float" x="0" y="0" width="88" height="18" uuid="e50eda3b-edd7-48e3-b0e5-40ace751b5f8"/>
+					<textElement>
+						<font fontName="Serif" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{penjualan_Tanggal}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="88" y="0" width="92" height="18" uuid="22b3b595-50f1-447b-82c9-e29676c15186"/>
+					<textElement>
+						<font fontName="Serif" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{penjualan_NoInvoice}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="180" y="0" width="85" height="18" uuid="52f90aa6-3c26-4b88-baa9-4906b6cf9a26"/>
+					<textElement>
+						<font fontName="Serif" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{penjualan_IDCustomer}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="265" y="0" width="179" height="18" uuid="2ab31af4-8e64-4de8-9e36-ce7aee6608d4"/>
+					<textElement>
+						<font fontName="Serif" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{customer_NamaCustomer}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="Rp #,##0">
+					<reportElement style="Detail" positionType="Float" x="444" y="0" width="111" height="18" uuid="7f5c4eb9-28c9-42e3-a1fa-47ac056f7ed4"/>
+					<textElement>
+						<font fontName="Serif" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{penjualan_TotalBeli}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="206" splitType="Stretch">
+			<textField pattern="Rp #,##0">
+				<reportElement x="444" y="12" width="100" height="20" uuid="f54d276f-a1a9-487e-95df-658bf4a7d100"/>
+				<textElement>
+					<font fontName="Serif" size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{SUM}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="344" y="12" width="100" height="20" uuid="72b31fdd-53b4-4cd1-8284-3636c6e157b9"/>
+				<textElement>
+					<font fontName="Serif" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL :]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="0" width="555" height="1" uuid="2d03cf3b-3f78-4229-88b7-9fdc9b1ca3a1"/>
+				<graphicElement>
+					<pen lineWidth="3.0" lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="370" y="86" width="172" height="114" uuid="03e698c1-8a0c-403d-b744-5b3baed1b57e"/>
+				<textElement textAlignment="Center">
+					<font size="13"/>
+				</textElement>
+				<text><![CDATA[Mengetahui,
+Kepala Toko]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="382" y="60" width="64" height="20" uuid="dfd310b7-0414-4326-b21d-788342128532"/>
+				<textElement>
+					<font size="13"/>
+				</textElement>
+				<text><![CDATA[Jakarta,]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="425" y="60" width="115" height="20" uuid="17ff6e96-464b-489a-9a1f-10ca5ed18b5d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="370" y="173" width="172" height="27" uuid="f02898fd-5ab9-47e5-90d3-291788fd4853"/>
+				<textElement textAlignment="Center">
+					<font size="13" isBold="true" isItalic="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Nirwana  Komputindo]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="516" y="7" width="40" height="13" backcolor="#E6E6E6" uuid="624a18e2-91ff-4d68-be85-ed7951eb79bc"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="1" y="7" width="100" height="13" uuid="ed4cbc9b-7315-49ad-944b-d1b0b3885d14"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="1" y="7" width="515" height="13" backcolor="#E6E6E6" uuid="21fd17f6-90e8-460c-b2ff-dd0c3e42bd21"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
