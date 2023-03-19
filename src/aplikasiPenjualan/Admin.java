@@ -15,6 +15,7 @@ import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author M. Subhan Ramdhani
+ * 
  */
 public class Admin extends javax.swing.JFrame {
      Connection conn = koneksi.getKoneksi();
