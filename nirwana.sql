@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 19, 2023 at 12:26 PM
+-- Generation Time: Mar 20, 2023 at 04:56 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 7.4.30
 
@@ -116,7 +116,9 @@ INSERT INTO `pembelian` (`noBL`, `tanggal`, `idSupp`, `totalBeli`) VALUES
 ('BL0001', '2023-03-19', 'SP0001', '7000000'),
 ('BL0002', '2023-03-19', 'SP0002', '18200000'),
 ('BL0003', '2023-03-19', 'SP0003', '10500000'),
-('BL0004', '2023-03-19', 'SP0002', '10425000');
+('BL0004', '2023-03-19', 'SP0002', '10425000'),
+('BL0005', '2023-03-20', 'SP0002', '9300000'),
+('BL0006', '2023-03-20', 'SP0003', '10500000');
 
 -- --------------------------------------------------------
 
@@ -138,6 +140,41 @@ CREATE TABLE `penjualan` (
 INSERT INTO `penjualan` (`noInv`, `tanggal`, `idCust`, `totalJual`) VALUES
 ('INV0001', '2022-09-22', 'CS0001', '2000000'),
 ('INV0002', '2023-03-19', 'CS0002', '1600000');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `retur`
+--
+
+CREATE TABLE `retur` (
+  `kode` varchar(10) NOT NULL,
+  `tanggal` date NOT NULL,
+  `customer` varchar(25) NOT NULL,
+  `IDBrg` varchar(10) NOT NULL,
+  `jumlah` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `retur`
+--
+
+INSERT INTO `retur` (`kode`, `tanggal`, `customer`, `IDBrg`, `jumlah`) VALUES
+('RT0001', '2023-03-20', 'ENTER COMPUTER', 'PC/G1020', 1);
+
+--
+-- Triggers `retur`
+--
+DELIMITER $$
+CREATE TRIGGER `retur` BEFORE INSERT ON `retur` FOR EACH ROW BEGIN
+
+INSERT INTO stok SET IDBrg = NEW.IDBrg,
+Stok = new.jumlah
+ON DUPLICATE KEY UPDATE stok = Stok + new.jumlah;
+
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -165,7 +202,9 @@ INSERT INTO `rincianpembelian` (`noBL`, `IDBrg`, `namaBrg`, `jumlah`, `harga`, `
 ('BL0001', 'PC/G1020', 'PRINTER CANON G1020', 5, '1400000', '7000000'),
 ('BL0002', 'PB/T220', 'PRINTER BROTHER T220', 10, '1820000', '18200000'),
 ('BL0003', 'PE/L3210', 'PRINTER EPSON L3210', 5, '2100000', '10500000'),
-('BL0004', 'PB/T420', 'PRINTER BROTHER T420', 5, '2085000', '10425000');
+('BL0004', 'PB/T420', 'PRINTER BROTHER T420', 5, '2085000', '10425000'),
+('BL0005', 'PB/T220', 'PRINTER BROTHER T220', 5, '1860000', '9300000'),
+('BL0006', 'PE/L3210', 'PRINTER EPSON L3210', 5, '2100000', '10500000');
 
 --
 -- Triggers `rincianpembelian`
@@ -230,10 +269,10 @@ CREATE TABLE `stok` (
 --
 
 INSERT INTO `stok` (`IDBrg`, `Stok`) VALUES
-('PC/G1020', 4),
 ('PB/T220', 10),
-('PE/L3210', 5),
-('PB/T420', 5);
+('PB/T420', 5),
+('PC/G1020', 5),
+('PE/L3210', 10);
 
 -- --------------------------------------------------------
 
@@ -266,6 +305,12 @@ INSERT INTO `supplier` (`IDSupp`, `namaSupp`, `alamat`, `noTelp`) VALUES
 --
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `stok`
+--
+ALTER TABLE `stok`
+  ADD PRIMARY KEY (`IDBrg`);
 
 --
 -- AUTO_INCREMENT for dumped tables

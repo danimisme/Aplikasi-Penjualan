@@ -60,6 +60,7 @@ public class Menu extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem10 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
@@ -157,6 +158,15 @@ public class Menu extends javax.swing.JFrame {
             }
         });
         jMenu3.add(jMenuItem6);
+
+        jMenuItem10.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jMenuItem10.setText("Retur Barang");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem10);
 
         jMenuBar1.add(jMenu3);
 
@@ -451,6 +461,25 @@ public class Menu extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenu6KeyPressed
 
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        // TODO add your handling code here:
+                if (id_group == null || id_group.matches("System Admin|Manager|Staff Gudang")) {
+            jDesktopPane1.removeAll();
+            FormRetur a = new FormRetur();
+            JInternalFrame internalframe = new JInternalFrame(judul, false, true, true);
+            internalframe.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+            internalframe.setContentPane(a.getContentPane());
+            internalframe.setLocation((jDesktopPane1.getWidth() - a.getWidth()) / 2, (jDesktopPane1.getHeight() - a.getHeight()) / 2);
+            internalframe.pack();
+
+            a.setLocationRelativeTo(this);
+            internalframe.setVisible(true);
+            jDesktopPane1.add(internalframe);
+        } else {
+            JOptionPane.showMessageDialog(null, "akses dibatasi.");
+        }
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -496,6 +525,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
