@@ -75,8 +75,8 @@ public class FormPenjualan extends javax.swing.JFrame {
             s.close();
             clear();
             utama();
-       // autonumber();
             kosong();
+            txIDCust.requestFocus();
         } catch (Exception e) {
             System.out.println("autonumber error");
         }
@@ -185,8 +185,6 @@ public class FormPenjualan extends javax.swing.JFrame {
         txIDCust.setText("");
         txNamaCust.setText("");
         txTotal.setText("0");
-        txBayar.setText("0");
-        txKembalian.setText("0");
     }
     
     public void clear2(){
@@ -331,6 +329,57 @@ public class FormPenjualan extends javax.swing.JFrame {
             System.out.println("Update Stok  Error "+ e);
         }
     }
+    
+        public void tambahPemasukan(){
+            String NoTr= "ERROR";
+         try {
+            Connection c = koneksi.getKoneksi();
+            Statement s = c.createStatement();
+            String sql = "SELECT * FROM aruskas ORDER BY No DESC";
+            ResultSet r = s.executeQuery(sql);
+            if (r.next()) {
+                String No = r.getString("No").substring(2);
+                String TR = "" +(Integer.parseInt(No)+1);
+                String Nol = "";
+                
+                if(TR.length()==1)
+                {Nol = "000";}
+                else if(TR.length()==2)
+                {Nol = "00";}
+                else if(TR.length()==3)
+                {Nol = "0";}
+                else if(TR.length()==4)
+                {Nol = "";}
+                NoTr = "TR" + Nol + TR;
+            } else {
+                NoTr =  "TR0001";
+            } 
+         } catch (Exception e) {
+            System.out.println("autonumber pemasukan kas error");
+        }    
+            
+        
+        String Tanggal = txTanggal.getText();
+        String Ket = "Penjualan " + txNoInvoice.getText();
+        String Jumlah = txTotal.getText();
+
+        try {
+            Connection c = koneksi.getKoneksi();
+            String sql = "INSERT INTO aruskas VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement p = c.prepareStatement(sql);
+            p.setString(1, NoTr);
+            p.setString(2, Tanggal);
+            p.setString(3, Ket);
+            p.setString(4, Jumlah);
+            p.setString(5,"0");
+            p.executeUpdate();
+            p.close();
+        } catch (Exception e) {
+            System.out.println("Terjadi Kesalahan Menambah Data");
+            System.out.println("Error : " +e);
+            JOptionPane.showMessageDialog(null, "Gagal menambah data !!");
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -367,11 +416,7 @@ public class FormPenjualan extends javax.swing.JFrame {
         btnHapus = new javax.swing.JButton();
         panelTotal = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
         txTotal = new javax.swing.JTextField();
-        txBayar = new javax.swing.JTextField();
-        txKembalian = new javax.swing.JTextField();
         btnSimpan = new javax.swing.JButton();
         btnAdd = new javax.swing.JButton();
         btnPrev = new javax.swing.JButton();
@@ -570,59 +615,29 @@ public class FormPenjualan extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel10.setText("Total         :");
 
-        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel11.setText("Bayar        :");
-
-        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel12.setText("Kembalian  :");
-
         txTotal.setBackground(new java.awt.Color(204, 255, 255));
         txTotal.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txTotal.setEnabled(false);
-
-        txBayar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txBayar.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txBayarKeyPressed(evt);
-            }
-        });
-
-        txKembalian.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txKembalian.setEnabled(false);
 
         javax.swing.GroupLayout panelTotalLayout = new javax.swing.GroupLayout(panelTotal);
         panelTotal.setLayout(panelTotalLayout);
         panelTotalLayout.setHorizontalGroup(
             panelTotalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelTotalLayout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addGroup(panelTotalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel10)
-                    .addComponent(jLabel11)
-                    .addComponent(jLabel12))
+                .addGap(29, 29, 29)
+                .addComponent(jLabel10)
                 .addGap(27, 27, 27)
-                .addGroup(panelTotalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txKembalian, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txBayar, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addComponent(txTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(31, Short.MAX_VALUE))
         );
         panelTotalLayout.setVerticalGroup(
             panelTotalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelTotalLayout.createSequentialGroup()
-                .addGap(5, 5, 5)
+                .addGap(42, 42, 42)
                 .addGroup(panelTotalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(txTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelTotalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(txBayar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelTotalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel12)
-                    .addComponent(txKembalian, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
 
         btnSimpan.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -807,28 +822,8 @@ public class FormPenjualan extends javax.swing.JFrame {
         int row = jTable1.getSelectedRow();
         model.removeRow(row);
         totalBiaya();
-        txBayar.setText("0");
-        txKembalian.setText("0");
+
     }//GEN-LAST:event_btnHapusActionPerformed
-
-    private void txBayarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txBayarKeyPressed
-        // TODO add your handling code here:
-        
-        int kode = evt.getKeyCode();
-        if(kode==evt.VK_ENTER){
-           int total, bayar, kembalian;
-        
-            total = Integer.valueOf(txTotal.getText());
-            bayar = Integer.valueOf(txBayar.getText());
-
-            if (total > bayar) {
-                JOptionPane.showMessageDialog(null, "Uang tidak cukup untuk melakukan pembayaran");
-            } else {
-                kembalian = bayar - total;
-                txKembalian.setText(String.valueOf(kembalian));
-            } 
-        }
-    }//GEN-LAST:event_txBayarKeyPressed
 
     private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
         // TODO add your handling code here:
@@ -881,10 +876,7 @@ public class FormPenjualan extends javax.swing.JFrame {
         } catch (Exception e) {
             System.out.println("Gagal menyimpan rincian penjualan" + e);
         }
-       // clear();
-       // utama();
-       // autonumber();
-       // kosong();
+       tambahPemasukan();
     }//GEN-LAST:event_btnSimpanActionPerformed
 
     private void txIDBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txIDBarangActionPerformed
@@ -1039,8 +1031,6 @@ public class FormPenjualan extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1054,12 +1044,10 @@ public class FormPenjualan extends javax.swing.JFrame {
     private javax.swing.JPanel panelInput;
     private javax.swing.JPanel panelJudul;
     private javax.swing.JPanel panelTotal;
-    private javax.swing.JTextField txBayar;
     private javax.swing.JTextField txHarga;
     private javax.swing.JTextField txIDBarang;
     private javax.swing.JTextField txIDCust;
     private javax.swing.JTextField txJumlah;
-    private javax.swing.JTextField txKembalian;
     private javax.swing.JTextField txNamaBarang;
     private javax.swing.JTextField txNamaCust;
     private javax.swing.JTextField txNoInvoice;

@@ -57,6 +57,10 @@ public class Menu extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
+        jMenu7 = new javax.swing.JMenu();
+        jMenuItem11 = new javax.swing.JMenuItem();
+        jMenuItem12 = new javax.swing.JMenuItem();
+        jMenuItem13 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
@@ -76,11 +80,11 @@ public class Menu extends javax.swing.JFrame {
         jDesktopPane1.setLayout(jDesktopPane1Layout);
         jDesktopPane1Layout.setHorizontalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 956, Short.MAX_VALUE)
+            .addGap(0, 1244, Short.MAX_VALUE)
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 671, Short.MAX_VALUE)
+            .addGap(0, 681, Short.MAX_VALUE)
         );
 
         jMenu1.setBackground(new java.awt.Color(255, 255, 255));
@@ -134,6 +138,40 @@ public class Menu extends javax.swing.JFrame {
         jMenu2.add(jMenuItem4);
 
         jMenuBar1.add(jMenu2);
+
+        jMenu7.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.lightGray, java.awt.Color.gray, java.awt.Color.black, java.awt.Color.gray));
+        jMenu7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/small-icon/money-2-24.png"))); // NOI18N
+        jMenu7.setText("  Keuangan   ");
+        jMenu7.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+
+        jMenuItem11.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jMenuItem11.setText("Pemasukan Kas");
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
+        jMenu7.add(jMenuItem11);
+
+        jMenuItem12.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jMenuItem12.setText("Pengeluaran Kas");
+        jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem12ActionPerformed(evt);
+            }
+        });
+        jMenu7.add(jMenuItem12);
+
+        jMenuItem13.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jMenuItem13.setText("Buku Kas");
+        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem13ActionPerformed(evt);
+            }
+        });
+        jMenu7.add(jMenuItem13);
+
+        jMenuBar1.add(jMenu7);
 
         jMenu3.setBackground(new java.awt.Color(255, 255, 255));
         jMenu3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED, java.awt.Color.lightGray, java.awt.Color.gray, java.awt.Color.black, java.awt.Color.gray));
@@ -463,7 +501,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
         // TODO add your handling code here:
-                if (id_group == null || id_group.matches("System Admin|Manager|Staff Gudang")) {
+            if (id_group == null || id_group.matches("System Admin|Manager|Staff Gudang")) {
             jDesktopPane1.removeAll();
             FormRetur a = new FormRetur();
             JInternalFrame internalframe = new JInternalFrame(judul, false, true, true);
@@ -479,6 +517,63 @@ public class Menu extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "akses dibatasi.");
         }
     }//GEN-LAST:event_jMenuItem10ActionPerformed
+
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+        // TODO add your handling code here:
+        if (id_group == null || id_group.matches("System Admin|Manager|Staff Gudang")) {
+            jDesktopPane1.removeAll();
+            PemasukanKas a = new PemasukanKas();
+            JInternalFrame internalframe = new JInternalFrame(judul, false, true, true);
+            internalframe.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+            internalframe.setContentPane(a.getContentPane());
+            internalframe.setLocation((jDesktopPane1.getWidth() - a.getWidth()) / 2, (jDesktopPane1.getHeight() - a.getHeight()) / 2);
+            internalframe.pack();
+
+            a.setLocationRelativeTo(this);
+            internalframe.setVisible(true);
+            jDesktopPane1.add(internalframe);
+        } else {
+            JOptionPane.showMessageDialog(null, "akses dibatasi.");
+        }
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
+
+    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
+        // TODO add your handling code here:
+            if (id_group == null || id_group.matches("System Admin|Manager|Staff Gudang")) {
+            jDesktopPane1.removeAll();
+            PengeluaranKas a = new PengeluaranKas();
+            JInternalFrame internalframe = new JInternalFrame(judul, false, true, true);
+            internalframe.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+            internalframe.setContentPane(a.getContentPane());
+            internalframe.setLocation((jDesktopPane1.getWidth() - a.getWidth()) / 2, (jDesktopPane1.getHeight() - a.getHeight()) / 2);
+            internalframe.pack();
+
+            a.setLocationRelativeTo(this);
+            internalframe.setVisible(true);
+            jDesktopPane1.add(internalframe);
+        } else {
+            JOptionPane.showMessageDialog(null, "akses dibatasi.");
+        }
+    }//GEN-LAST:event_jMenuItem12ActionPerformed
+
+    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
+        // TODO add your handling code here:
+            if (id_group == null || id_group.matches("System Admin|Manager|Staff Gudang")) {
+            jDesktopPane1.removeAll();
+            BukuKas a = new BukuKas();
+            JInternalFrame internalframe = new JInternalFrame(judul, false, true, true);
+            internalframe.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+            internalframe.setContentPane(a.getContentPane());
+            internalframe.setLocation((jDesktopPane1.getWidth() - a.getWidth()) / 2, (jDesktopPane1.getHeight() - a.getHeight()) / 2);
+            internalframe.pack();
+
+            a.setLocationRelativeTo(this);
+            internalframe.setVisible(true);
+            jDesktopPane1.add(internalframe);
+        } else {
+            JOptionPane.showMessageDialog(null, "akses dibatasi.");
+        }
+    }//GEN-LAST:event_jMenuItem13ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -523,9 +618,13 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
+    private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
+    private javax.swing.JMenuItem jMenuItem11;
+    private javax.swing.JMenuItem jMenuItem12;
+    private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;

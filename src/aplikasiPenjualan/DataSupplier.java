@@ -20,6 +20,7 @@ public class DataSupplier extends javax.swing.JFrame {
     koneksi koneksi = new koneksi();
     private DefaultTableModel model;
     
+    
     public void loadData(){
         model.getDataVector().removeAllElements();
         model.fireTableDataChanged();
@@ -99,6 +100,8 @@ public class DataSupplier extends javax.swing.JFrame {
         btnLoad.setEnabled(true);
         loadData();
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.

@@ -84,7 +84,7 @@ public class UpdateDataCust extends javax.swing.JFrame {
             System.out.println("autonumber error" + e);
         }
     }
-     public void clear(){
+    public void clear(){
         txNamaCust.setText("");
         txIDCust.setText("");
         txAlamat.setText("");

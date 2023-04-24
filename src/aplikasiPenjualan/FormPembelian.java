@@ -200,6 +200,57 @@ public class FormPembelian extends javax.swing.JFrame {
             System.out.println("IDCust Cek Error : "+e);
         }
     }
+        
+    public void tambahPengeluaran(){
+            String NoTr= "ERROR";
+         try {
+            Connection c = koneksi.getKoneksi();
+            Statement s = c.createStatement();
+            String sql = "SELECT * FROM aruskas ORDER BY No DESC";
+            ResultSet r = s.executeQuery(sql);
+            if (r.next()) {
+                String No = r.getString("No").substring(2);
+                String TR = "" +(Integer.parseInt(No)+1);
+                String Nol = "";
+                
+                if(TR.length()==1)
+                {Nol = "000";}
+                else if(TR.length()==2)
+                {Nol = "00";}
+                else if(TR.length()==3)
+                {Nol = "0";}
+                else if(TR.length()==4)
+                {Nol = "";}
+                NoTr = "TR" + Nol + TR;
+            } else {
+                NoTr =  "TR0001";
+            } 
+         } catch (Exception e) {
+            System.out.println("autonumber kas error");
+        }    
+            
+        
+        String Tanggal = txTanggal.getText();
+        String Ket = "Pembelian " + txNoBL.getText();
+        String Jumlah = txTotal.getText();
+
+        try {
+            Connection c = koneksi.getKoneksi();
+            String sql = "INSERT INTO aruskas VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement p = c.prepareStatement(sql);
+            p.setString(1, NoTr);
+            p.setString(2, Tanggal);
+            p.setString(3, Ket);
+            p.setString(4, "0");
+            p.setString(5,Jumlah);
+            p.executeUpdate();
+            p.close();
+        } catch (Exception e) {
+            System.out.println("Terjadi Kesalahan Menambah Data");
+            System.out.println("Error : " +e);
+            JOptionPane.showMessageDialog(null, "Gagal menambah data !!");
+        }
+    }
     
     /**
      * Creates new form FormPembelian
@@ -657,6 +708,7 @@ public class FormPembelian extends javax.swing.JFrame {
         } catch (Exception e) {
             System.out.println("Gagal menyimpan rincian penjualan" + e);
         }
+        tambahPengeluaran();
         clear();
         utama();
         autonumber();
