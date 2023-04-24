@@ -175,7 +175,7 @@ public class PengeluaranKas extends javax.swing.JFrame {
             Connection c = koneksi.getKoneksi();
             Statement s = c.createStatement();
             
-            String sql = "SELECT * FROM aruskas where month(tanggal) = '"+bulan+"' ORDER BY No";
+            String sql = "SELECT * FROM aruskas where month(tanggal) = '"+bulan+"' AND uangKeluar != '0' ORDER BY No";
             ResultSet r = s.executeQuery(sql);
             
             while (r.next()) {
@@ -183,7 +183,7 @@ public class PengeluaranKas extends javax.swing.JFrame {
                 o [0] = r.getString("No");
                 o [1] = r.getString("tanggal");
                 o [2] = r.getString("ket");
-                o [3] = r.getString("uangMasuk");
+                o [3] = r.getString("uangKeluar");
                 
                 model.addRow(o);
             }

@@ -174,7 +174,7 @@ private DefaultTableModel model;
             Connection c = koneksi.getKoneksi();
             Statement s = c.createStatement();
             
-            String sql = "SELECT * FROM aruskas where month(tanggal) = '"+bulan+"' ORDER BY No";
+            String sql = "SELECT * FROM aruskas where month(tanggal) = '"+bulan+"' AND uangMasuk != '0' ORDER BY No";
             ResultSet r = s.executeQuery(sql);
             
             while (r.next()) {

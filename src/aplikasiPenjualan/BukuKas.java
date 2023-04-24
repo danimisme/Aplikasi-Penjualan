@@ -8,6 +8,7 @@ package aplikasiPenjualan;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.NumberFormat;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
@@ -27,7 +28,8 @@ public class BukuKas extends javax.swing.JFrame {
         try {
             Connection c = koneksi.getKoneksi();
             Statement s = c.createStatement();
-            
+            NumberFormat num=NumberFormat.getInstance();
+             txSaldoAwal.setText("Rp. " + String.valueOf(num.format(0)));
             String sql = "SELECT No , tanggal , ket , uangMasuk , UangKeluar ,\n" +
                          "SUM(uangMasuk - UangKeluar) OVER (ORDER BY tanggal ASC, No ASC) \n" +
                          "AS saldo\n" +
@@ -35,7 +37,8 @@ public class BukuKas extends javax.swing.JFrame {
             String saldoakhir = "SELECT SUM(uangMasuk-UangKeluar) AS saldoakhir FROM aruskas";
             ResultSet a = s.executeQuery(saldoakhir);
             if (a.next()){
-              txSaldoAkhir.setText(a.getString("saldoakhir"));
+            int saldo = a.getInt("saldoakhir");
+            txSaldoAkhir.setText("Rp. " + num.format(saldo));
             }
             a.close();
             
@@ -65,7 +68,7 @@ public class BukuKas extends javax.swing.JFrame {
         DateTimeFormatter monthFormatter = DateTimeFormatter.ofPattern("MM");
         String bulan = monthFormatter.format(Month.of(jMonthChooser1.getMonth() + 1));
         int bulanterakhir = Integer.parseInt(bulan) - 1;
-        
+        NumberFormat num=NumberFormat.getInstance();
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.getDataVector().removeAllElements();
         model.fireTableDataChanged();       
@@ -76,9 +79,9 @@ public class BukuKas extends javax.swing.JFrame {
                     + "where month(tanggal) between '01' AND '" + bulanterakhir +"' "  ;
             ResultSet b = s.executeQuery(saldoawal);
             if (b.next()){
-              txSaldoAwal.setText(b.getString("saldoawal"));
+               int saldo = b.getInt("saldoawal");
+               txSaldoAwal.setText("Rp. " + num.format(saldo));
             }
-            else txSaldoAwal.setText("0"); 
             b.close();
             
             
@@ -86,8 +89,9 @@ public class BukuKas extends javax.swing.JFrame {
             String saldoakhir = "SELECT SUM(uangMasuk-UangKeluar) AS saldoakhir FROM aruskas ";
             ResultSet a = s.executeQuery(saldoakhir);
             if (a.next()){
-              txSaldoAkhir.setText(a.getString("saldoakhir"));
-            }
+                int saldo = a.getInt("saldoakhir");
+                txSaldoAkhir.setText("Rp. " + num.format(saldo));
+            } 
             a.close();
             String sql = "SELECT No , tanggal , ket , uangMasuk , UangKeluar ,\n" +
                          "SUM(uangMasuk - UangKeluar) OVER (ORDER BY tanggal ASC, No ASC) \n" +
