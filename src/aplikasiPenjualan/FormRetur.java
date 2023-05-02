@@ -37,8 +37,7 @@ public class FormRetur extends javax.swing.JFrame {
         autonumber();
         
         
-        
-        txIDCust.requestFocus();
+
     }
     
     private void autonumber(){
@@ -70,7 +69,7 @@ public class FormRetur extends javax.swing.JFrame {
         } catch (Exception e) {
             System.out.println("autonumber error");
         }
-        txIDCust.requestFocus();
+
     }
     
     public void loadData(){
@@ -104,36 +103,12 @@ public class FormRetur extends javax.swing.JFrame {
     }
     
     public void clear(){
-        txIDCust.setText("");
-        txNamaCust.setText("");
         txIdBrg.setText("");
         txNamaBrg.setText("");
         txJumlah.setText("");
-        txIDCust.requestFocus();
     }
     
-    public void idCustCek(){
-        try {
-            Connection c = koneksi.getKoneksi();
-            Statement s = c.createStatement();
-            String sql = "SELECT * FROM customer WHERE IDCust = \"" +txIDCust.getText()+"\"";
-            
-            ResultSet r = s.executeQuery(sql);
-            if(r.next()){
-                String nama = r.getString("namaCust");
-                txNamaCust.setText(nama);
-                txIdBrg.requestFocus();
-            } else {
-                txIDCust.setText("");
-                txIDCust.requestFocus();
-                JOptionPane.showMessageDialog(null,"ID Customer Salah !!");
-            }
-            
-        }catch (Exception e){
-            System.out.println("IDCust Cek Error : "+e);
-        }
-    }
-    
+  
         public void idBarangCek(){
         try {
             Connection c = koneksi.getKoneksi();
@@ -167,12 +142,8 @@ public class FormRetur extends javax.swing.JFrame {
         panelJudul = new javax.swing.JPanel();
         Judul = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         txKode = new javax.swing.JTextField();
-        txIDCust = new javax.swing.JTextField();
-        txNamaCust = new javax.swing.JTextField();
         txTanggal = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -194,7 +165,7 @@ public class FormRetur extends javax.swing.JFrame {
 
         Judul.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         Judul.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/barang-icon.png"))); // NOI18N
-        Judul.setText("  Retur Barang");
+        Judul.setText("  Penyesuaian Stok");
 
         javax.swing.GroupLayout panelJudulLayout = new javax.swing.GroupLayout(panelJudul);
         panelJudul.setLayout(panelJudulLayout);
@@ -213,12 +184,6 @@ public class FormRetur extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Kode Retur         :");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel3.setText("ID Customer       :");
-
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel4.setText("Nama Customer  :");
-
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel5.setText("Tanggal   :");
 
@@ -228,18 +193,6 @@ public class FormRetur extends javax.swing.JFrame {
                 txKodeActionPerformed(evt);
             }
         });
-
-        txIDCust.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txIDCust.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txIDCustActionPerformed(evt);
-            }
-        });
-
-        txNamaCust.setBackground(new java.awt.Color(204, 255, 255));
-        txNamaCust.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txNamaCust.setBorder(null);
-        txNamaCust.setEnabled(false);
 
         txTanggal.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txTanggal.addActionListener(new java.awt.event.ActionListener() {
@@ -329,28 +282,16 @@ public class FormRetur extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnSimpan))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(18, 18, 18)
-                                .addComponent(txNamaCust, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txIDCust, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txKode, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txKode, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 153, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(2, 2, 2)
                                 .addComponent(jLabel13)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txIdBrg, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(58, 58, 58)
                                 .addComponent(jLabel5)
                                 .addGap(18, 18, 18)
                                 .addComponent(txTanggal, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -375,14 +316,7 @@ public class FormRetur extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
                             .addComponent(txKode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(23, 23, 23)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(txIDCust, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(25, 25, 25)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(txNamaCust, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(98, 98, 98))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
@@ -420,25 +354,24 @@ public class FormRetur extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txKodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txKodeActionPerformed
+    private void txJumlahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txJumlahActionPerformed
         // TODO add your handling code here:
-        txIDCust.requestFocus();
-    }//GEN-LAST:event_txKodeActionPerformed
+        btnSimpan.requestFocus();
+    }//GEN-LAST:event_txJumlahActionPerformed
 
-    private void txIDCustActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txIDCustActionPerformed
+    private void txNamaBrgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txNamaBrgActionPerformed
         // TODO add your handling code here:
-        idCustCek();
-    }//GEN-LAST:event_txIDCustActionPerformed
+    }//GEN-LAST:event_txNamaBrgActionPerformed
 
-    private void txTanggalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txTanggalActionPerformed
+    private void txIdBrgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txIdBrgActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txTanggalActionPerformed
+        idBarangCek();
+    }//GEN-LAST:event_txIdBrgActionPerformed
 
     private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
         // TODO add your handling code here:
         String kode = txKode.getText();
         String tanggal = txTanggal.getText();
-        String customer = txNamaCust.getText();
         String barang = txIdBrg.getText();
         String jumlah = txJumlah.getText();
 
@@ -448,7 +381,6 @@ public class FormRetur extends javax.swing.JFrame {
             PreparedStatement p = c.prepareStatement(sql);
             p.setString(1, kode);
             p.setString(2, tanggal);
-            p.setString(3, customer);
             p.setString(4, barang);
             p.setString(5, jumlah);
             p.executeUpdate();
@@ -462,19 +394,14 @@ public class FormRetur extends javax.swing.JFrame {
         autonumber();
     }//GEN-LAST:event_btnSimpanActionPerformed
 
-    private void txIdBrgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txIdBrgActionPerformed
+    private void txTanggalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txTanggalActionPerformed
         // TODO add your handling code here:
-        idBarangCek();
-    }//GEN-LAST:event_txIdBrgActionPerformed
+    }//GEN-LAST:event_txTanggalActionPerformed
 
-    private void txNamaBrgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txNamaBrgActionPerformed
+    private void txKodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txKodeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txNamaBrgActionPerformed
 
-    private void txJumlahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txJumlahActionPerformed
-        // TODO add your handling code here:
-        btnSimpan.requestFocus();
-    }//GEN-LAST:event_txJumlahActionPerformed
+    }//GEN-LAST:event_txKodeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -518,19 +445,15 @@ public class FormRetur extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JPanel panelJudul;
-    private javax.swing.JTextField txIDCust;
     private javax.swing.JTextField txIdBrg;
     private javax.swing.JTextField txJumlah;
     private javax.swing.JTextField txKode;
     private javax.swing.JTextField txNamaBrg;
-    private javax.swing.JTextField txNamaCust;
     private javax.swing.JTextField txTanggal;
     // End of variables declaration//GEN-END:variables
 }

@@ -32,7 +32,6 @@ private DefaultTableModel model;
         Locale.setDefault(locale);
         autonumber();
         loadData();
-        total();
     }
     public void autonumber(){
         try {
@@ -159,6 +158,7 @@ private DefaultTableModel model;
             }
             r.close();
             s.close();
+            total();
         } catch (Exception e) {
             System.out.println("terjadi kesalahan load data");
             System.out.println("Error : "+e);
@@ -189,6 +189,7 @@ private DefaultTableModel model;
             System.out.println(sql);
             r.close();
             s.close();
+            total();
         } catch (Exception e) {
             System.out.println("terjadi kesalahan load data");
             System.out.println("Error : "+e);

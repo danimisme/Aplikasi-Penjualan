@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 20, 2023 at 04:56 PM
+-- Generation Time: May 02, 2023 at 04:18 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 7.4.30
 
@@ -41,7 +41,41 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`id`, `full_name`, `user_login`, `email`, `group_user`, `password`) VALUES
-(1, 'Muhammad Subhan R', 'admin', 'msubhanr53@gmail.com', 'System Admin', 'admin');
+(1, 'Muhammad Subhan R', 'admin', 'msubhanr53@gmail.com', 'System Admin', 'admin'),
+(2, 'Eriel', 'eriel', 'admin', 'Staff Gudang', 'admin');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `aruskas`
+--
+
+CREATE TABLE `aruskas` (
+  `No` varchar(11) NOT NULL,
+  `tanggal` date NOT NULL,
+  `ket` text NOT NULL,
+  `uangMasuk` float NOT NULL,
+  `UangKeluar` float NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `aruskas`
+--
+
+INSERT INTO `aruskas` (`No`, `tanggal`, `ket`, `uangMasuk`, `UangKeluar`) VALUES
+('TR0001', '2023-03-07', 'Setoran Modal', 50000000, 0),
+('TR0002', '2023-03-07', 'Bonus Penjualan Canon', 1000000, 0),
+('TR0003', '2023-04-11', 'Bonus Penjualan Epson', 20000000, 0),
+('TR0004', '2023-04-14', 'Penjualan INV0004', 3000000, 0),
+('TR0005', '2023-04-14', 'Penjualan INV0005', 4200000, 0),
+('TR0006', '2023-04-24', 'Pembelian BL0008', 0, 7750000),
+('TR0007', '2023-05-02', 'Penjualan INV0006', 4600000, 0),
+('TR0008', '2023-05-03', 'Penjualan INV0007', 6600000, 0),
+('TR0009', '2023-05-04', 'Pembelian BL0009', 10000000, 10000000),
+('TR0010', '2023-05-02', 'Pembelian BL0010', 0, 4000000),
+('TR0011', '2023-05-02', 'Upah kuli', 100000, 100000),
+('TR0012', '2023-05-02', 'Penjualan INV0008', 6600000, 0),
+('TR0013', '2023-05-02', 'Kelebihan Bayar Sewa', 1000000, 0);
 
 -- --------------------------------------------------------
 
@@ -118,7 +152,11 @@ INSERT INTO `pembelian` (`noBL`, `tanggal`, `idSupp`, `totalBeli`) VALUES
 ('BL0003', '2023-03-19', 'SP0003', '10500000'),
 ('BL0004', '2023-03-19', 'SP0002', '10425000'),
 ('BL0005', '2023-03-20', 'SP0002', '9300000'),
-('BL0006', '2023-03-20', 'SP0003', '10500000');
+('BL0006', '2023-03-20', 'SP0003', '10500000'),
+('BL0007', '2023-04-24', 'SP0003', '12250000'),
+('BL0008', '2023-04-24', 'SP0004', '7750000'),
+('BL0009', '2023-05-04', 'SP0003', '10000000'),
+('BL0010', '2023-05-02', 'SP0001', '4000000');
 
 -- --------------------------------------------------------
 
@@ -139,7 +177,13 @@ CREATE TABLE `penjualan` (
 
 INSERT INTO `penjualan` (`noInv`, `tanggal`, `idCust`, `totalJual`) VALUES
 ('INV0001', '2022-09-22', 'CS0001', '2000000'),
-('INV0002', '2023-03-19', 'CS0002', '1600000');
+('INV0002', '2023-03-19', 'CS0002', '1600000'),
+('INV0003', '2023-04-14', 'CS0001', '4400000'),
+('INV0004', '2023-04-14', 'CS0002', '3000000'),
+('INV0005', '2023-04-14', 'CS0004', '4200000'),
+('INV0006', '2023-05-02', 'CS0002', '4600000'),
+('INV0007', '2023-05-03', 'CS0001', '6600000'),
+('INV0008', '2023-05-02', 'CS0003', '6600000');
 
 -- --------------------------------------------------------
 
@@ -160,7 +204,8 @@ CREATE TABLE `retur` (
 --
 
 INSERT INTO `retur` (`kode`, `tanggal`, `customer`, `IDBrg`, `jumlah`) VALUES
-('RT0001', '2023-03-20', 'ENTER COMPUTER', 'PC/G1020', 1);
+('RT0001', '2023-03-20', 'ENTER COMPUTER', 'PC/G1020', 1),
+('RT0002', '2023-05-02', 'ENTER COMPUTER', 'PE/L3210', 1);
 
 --
 -- Triggers `retur`
@@ -204,7 +249,11 @@ INSERT INTO `rincianpembelian` (`noBL`, `IDBrg`, `namaBrg`, `jumlah`, `harga`, `
 ('BL0003', 'PE/L3210', 'PRINTER EPSON L3210', 5, '2100000', '10500000'),
 ('BL0004', 'PB/T420', 'PRINTER BROTHER T420', 5, '2085000', '10425000'),
 ('BL0005', 'PB/T220', 'PRINTER BROTHER T220', 5, '1860000', '9300000'),
-('BL0006', 'PE/L3210', 'PRINTER EPSON L3210', 5, '2100000', '10500000');
+('BL0006', 'PE/L3210', 'PRINTER EPSON L3210', 5, '2100000', '10500000'),
+('BL0007', 'PE/L3250', 'PRINTER EPSON L3250', 5, '2450000', '12250000'),
+('BL0008', 'PH/HP315', 'PRINTER HP 315', 5, '1550000', '7750000'),
+('BL0009', 'PE/L1300', 'PRINTER EPSON L1300', 2, '5000000', '10000000'),
+('BL0010', 'PE/L3210', 'PRINTER EPSON L3210', 2, '2000000', '4000000');
 
 --
 -- Triggers `rincianpembelian`
@@ -241,7 +290,13 @@ CREATE TABLE `rincianpenjualan` (
 
 INSERT INTO `rincianpenjualan` (`noInv`, `IDBrg`, `namaBrg`, `jumlah`, `harga`, `total`) VALUES
 ('INV0001', 'PC/G2020', 'PRINTER CANON G2020', 1, '2000000', '2000000'),
-('INV0002', 'PC/G1020', 'PRINTER CANON G1020', 1, '1600000', '1600000');
+('INV0002', 'PC/G1020', 'PRINTER CANON G1020', 1, '1600000', '1600000'),
+('INV0003', 'PE/L3210', 'PRINTER EPSON L3210', 2, '2200000', '4400000'),
+('INV0004', 'PC/G1020', 'PRINTER CANON G1020', 2, '1500000', '3000000'),
+('INV0005', 'PB/T220', 'PRINTER BROTHER T220', 2, '2100000', '4200000'),
+('INV0006', 'PE/L3210', 'PRINTER EPSON L3210', 2, '2300000', '4600000'),
+('INV0007', 'PB/T220', 'PRINTER BROTHER T220', 3, '2200000', '6600000'),
+('INV0008', 'PE/L3210', 'PRINTER EPSON L3210', 3, '2200000', '6600000');
 
 --
 -- Triggers `rincianpenjualan`
@@ -269,10 +324,13 @@ CREATE TABLE `stok` (
 --
 
 INSERT INTO `stok` (`IDBrg`, `Stok`) VALUES
-('PB/T220', 10),
+('PB/T220', 5),
 ('PB/T420', 5),
-('PC/G1020', 5),
-('PE/L3210', 10);
+('PC/G1020', 3),
+('PE/L1300', 2),
+('PE/L3210', 6),
+('PE/L3250', 5),
+('PH/HP315', 5);
 
 -- --------------------------------------------------------
 
@@ -294,7 +352,8 @@ CREATE TABLE `supplier` (
 INSERT INTO `supplier` (`IDSupp`, `namaSupp`, `alamat`, `noTelp`) VALUES
 ('SP0001', 'PT DATASCRIPT INDO', 'Ruko Grand Butik, Mangga dua selatan', '021-8364893'),
 ('SP0002', 'PT BROTHER INDONESIA', 'Kebon Jeruk, Jakarta Barat', '0219837281'),
-('SP0003', 'PT PASIFIK DISTRIBUTOR', 'Jl. Gunung Sahari no.05', '02109729832');
+('SP0003', 'PT PASIFIK DISTRIBUTOR', 'Jl. Gunung Sahari no.05', '02109729832'),
+('SP0004', 'PT ECS Distribusi', 'Ruko Mangga Dua Square No E 11', '021-349203489');
 
 --
 -- Indexes for dumped tables
@@ -320,7 +379,7 @@ ALTER TABLE `stok`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -32,7 +32,6 @@ public class PengeluaranKas extends javax.swing.JFrame {
         Locale.setDefault(locale);
         autonumber();
         loadData();
-        total();
     }
     
     public void autonumber(){
@@ -160,6 +159,7 @@ public class PengeluaranKas extends javax.swing.JFrame {
             }
             r.close();
             s.close();
+            total();
         } catch (Exception e) {
             System.out.println("terjadi kesalahan load data");
             System.out.println("Error : "+e);
@@ -190,6 +190,7 @@ public class PengeluaranKas extends javax.swing.JFrame {
             System.out.println(sql);
             r.close();
             s.close();
+            total();
         } catch (Exception e) {
             System.out.println("terjadi kesalahan load data");
             System.out.println("Error : "+e);

@@ -72,6 +72,8 @@ public class BukuKas extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.getDataVector().removeAllElements();
         model.fireTableDataChanged();       
+        
+        int saldoAwal = 0;
         try {
             Connection c = koneksi.getKoneksi();
             Statement s = c.createStatement();
@@ -79,10 +81,11 @@ public class BukuKas extends javax.swing.JFrame {
                     + "where month(tanggal) between '01' AND '" + bulanterakhir +"' "  ;
             ResultSet b = s.executeQuery(saldoawal);
             if (b.next()){
-               int saldo = b.getInt("saldoawal");
-               txSaldoAwal.setText("Rp. " + num.format(saldo));
+               saldoAwal = b.getInt("saldoawal");
+               txSaldoAwal.setText("Rp. " + num.format(saldoAwal));
             }
             b.close();
+            
             
             
             
@@ -109,7 +112,7 @@ public class BukuKas extends javax.swing.JFrame {
                 o [2] = r.getString("ket");
                 o [3] = r.getString("uangMasuk");
                 o [4] = r.getString("uangKeluar");
-                o [5] = saldoTransaksi;
+                o [5] = saldoAwal + saldoTransaksi;
                 model.addRow(o);
             }
             r.close();
