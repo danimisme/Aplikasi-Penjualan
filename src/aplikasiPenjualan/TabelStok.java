@@ -131,8 +131,8 @@ public class TabelStok extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         btnBatal = new javax.swing.JButton();
         btnCetak = new javax.swing.JButton();
-        btnCetakDetail = new javax.swing.JButton();
-        txIDBarang = new javax.swing.JTextField();
+        btnRetur = new javax.swing.JButton();
+        btnLoad = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -241,16 +241,20 @@ public class TabelStok extends javax.swing.JFrame {
             }
         });
 
-        btnCetakDetail.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnCetakDetail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/print-icon.png"))); // NOI18N
-        btnCetakDetail.setText(" Cetak Detail");
-        btnCetakDetail.addActionListener(new java.awt.event.ActionListener() {
+        btnRetur.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnRetur.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Load-icon.png"))); // NOI18N
+        btnRetur.setText(" Penyesuaian Stok");
+        btnRetur.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCetakDetailActionPerformed(evt);
+                btnReturActionPerformed(evt);
             }
         });
 
-        txIDBarang.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnLoad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoadActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -261,9 +265,9 @@ public class TabelStok extends javax.swing.JFrame {
                 .addGap(47, 47, 47)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(txIDBarang, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(35, 35, 35)
-                        .addComponent(btnCetakDetail)
+                        .addComponent(btnRetur)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnLoad, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnCetak)
                         .addGap(31, 31, 31)
@@ -285,12 +289,17 @@ public class TabelStok extends javax.swing.JFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(23, 23, 23)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 534, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnBatal)
-                    .addComponent(btnCetak)
-                    .addComponent(btnCetakDetail)
-                    .addComponent(txIDBarang))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnBatal)
+                            .addComponent(btnCetak)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnRetur)
+                            .addComponent(btnLoad, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -326,7 +335,6 @@ public class TabelStok extends javax.swing.JFrame {
         // TODO add your handling code here:
         int bar = jTable1.getSelectedRow();
         String a = model.getValueAt(bar, 0).toString();
-        txIDBarang.setText(a);
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void btnBatalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBatalActionPerformed
@@ -356,28 +364,16 @@ public class TabelStok extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnCetakActionPerformed
 
-    private void btnCetakDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCetakDetailActionPerformed
+    private void btnReturActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturActionPerformed
         // TODO add your handling code here:
-        
-         try {
-              
-              //String namaFile =  "src/aplikasiPenjualan/data/Stok.jasper";
-              Connection conn = new koneksi().getKoneksi();
-              HashMap parameter = new HashMap();
-              parameter.put("PID",txIDBarang.getText());
-              //File report_file = new File (namaFile);
-              InputStream file = getClass().getResourceAsStream("/aplikasiPenjualan/data/detailStok.jrxml");
-              JasperDesign jasperDesign = JRXmlLoader.load(file);
-              JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
-              //JasperReport jasperReport =(JasperReport) JRLoader.loadObject(report_file.getPath());
-              JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameter,conn);
-               //JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport,parameter,conn);
-              JasperViewer.viewReport(jasperPrint,false);
-          }catch (Exception e){
-              JOptionPane.showMessageDialog(null, e.getMessage());
-           
-        }
-    }//GEN-LAST:event_btnCetakDetailActionPerformed
+        loadData();
+        new FormRetur().setVisible(true);
+    }//GEN-LAST:event_btnReturActionPerformed
+
+    private void btnLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadActionPerformed
+        // TODO add your handling code here:
+        loadData();
+    }//GEN-LAST:event_btnLoadActionPerformed
 
     /**
      * @param args the command line arguments
@@ -418,7 +414,8 @@ public class TabelStok extends javax.swing.JFrame {
     private javax.swing.JLabel Judul2;
     private javax.swing.JButton btnBatal;
     private javax.swing.JButton btnCetak;
-    private javax.swing.JButton btnCetakDetail;
+    public static javax.swing.JButton btnLoad;
+    public static javax.swing.JButton btnRetur;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
@@ -427,6 +424,5 @@ public class TabelStok extends javax.swing.JFrame {
     public javax.swing.JTable jTable1;
     private javax.swing.JPanel panelJudul2;
     private javax.swing.JTextField txCari;
-    private javax.swing.JTextField txIDBarang;
     // End of variables declaration//GEN-END:variables
 }

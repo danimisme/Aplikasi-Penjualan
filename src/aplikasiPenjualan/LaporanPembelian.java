@@ -8,6 +8,8 @@ package aplikasiPenjualan;
 
 import java.io.InputStream;
 import java.sql.Connection;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import javax.swing.JOptionPane;
@@ -157,12 +159,16 @@ public class LaporanPembelian extends javax.swing.JFrame {
     private void btnCetakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCetakActionPerformed
         // TODO add your handling code here:
         try {
-
+            Date date = new Date();
+            SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy");
+            Date tgl = tglAwal.getDate();
+            System.out.println(s.format(tgl));
             //String namaFile =  "src/aplikasiPenjualan/data/Stok.jasper";
             Connection conn = new koneksi().getKoneksi();
             HashMap parameter = new HashMap();
             parameter.put("tgl_awal", tglAwal.getDate());
             parameter.put("tgl_akhir", tglAkhir.getDate());
+            
             //File report_file = new File (namaFile);
             InputStream file = getClass().getResourceAsStream("/aplikasiPenjualan/data/LaporanPembelian.jrxml");
             JasperDesign jasperDesign = JRXmlLoader.load(file);

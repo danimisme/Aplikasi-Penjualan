@@ -29,16 +29,19 @@ public class UpdateDataBarang extends javax.swing.JFrame {
         String nama = txNamaBarang.getText();
         String jenis = (String)cbJenis.getSelectedItem();
         String merek = txMerek.getText();
-        
+        String hargabeli = txHargaBeli.getText();
+        String hargajual = txHargaJual.getText();
         
         try {
             Connection c = koneksi.getKoneksi();
-            String sql = "UPDATE barang SET NamaBrg = ?, Jenis = ?, Merek = ? WHERE IDBrg = ? ";
+            String sql = "UPDATE barang SET NamaBrg = ?, Jenis = ?, Merek = ?, hargabeli=? , hargajual=? WHERE IDBrg = ? ";
             PreparedStatement p = c.prepareStatement(sql);
             p.setString(1, nama);
             p.setString(2, jenis);
             p.setString(3, merek);
-            p.setString(4, id);
+            p.setString(4, hargabeli);
+            p.setString(5, hargajual);
+            p.setString(6, id);
             p.executeUpdate();
             p.close();
             JOptionPane.showMessageDialog(null, "Data Telah di Ubah, Silahkan Load Data !!");
@@ -57,15 +60,19 @@ public class UpdateDataBarang extends javax.swing.JFrame {
         String nama = txNamaBarang.getText();
         String jenis = (String)cbJenis.getSelectedItem();
         String merek = txMerek.getText();
+        String hargabeli = txHargaBeli.getText();
+        String hargajual = txHargaJual.getText();
 
         try {
             Connection c = koneksi.getKoneksi();
-            String sql = "INSERT INTO BARANG VALUES (?, ?, ?, ?)";
+            String sql = "INSERT INTO BARANG VALUES (?, ?, ?, ?,?,?)";
             PreparedStatement p = c.prepareStatement(sql);
             p.setString(1, id);
             p.setString(2, nama);
             p.setString(3, jenis);
             p.setString(4, merek);
+            p.setString(5, hargabeli);
+            p.setString(6, hargajual);
             p.executeUpdate();
             p.close();
             JOptionPane.showMessageDialog(null, "Data Tersimpan, Silahkan Load Data !!");
@@ -106,6 +113,10 @@ public class UpdateDataBarang extends javax.swing.JFrame {
         txNamaBarang = new javax.swing.JTextField();
         txMerek = new javax.swing.JTextField();
         cbJenis = new javax.swing.JComboBox<>();
+        txHargaBeli = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        txHargaJual = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
         btnBatal = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         btnSimpan = new javax.swing.JButton();
@@ -150,6 +161,16 @@ public class UpdateDataBarang extends javax.swing.JFrame {
             }
         });
 
+        txHargaBeli.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel7.setText("Harga Beli");
+
+        txHargaJual.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel8.setText("Harga Jual");
+
         javax.swing.GroupLayout PanelInputDataBarangLayout = new javax.swing.GroupLayout(PanelInputDataBarang);
         PanelInputDataBarang.setLayout(PanelInputDataBarangLayout);
         PanelInputDataBarangLayout.setHorizontalGroup(
@@ -175,7 +196,15 @@ public class UpdateDataBarang extends javax.swing.JFrame {
                                 .addGap(103, 103, 103)))
                         .addGroup(PanelInputDataBarangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txNamaBarang)
-                            .addComponent(cbJenis, 0, 237, Short.MAX_VALUE))))
+                            .addComponent(cbJenis, 0, 237, Short.MAX_VALUE)))
+                    .addGroup(PanelInputDataBarangLayout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txHargaBeli, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(PanelInputDataBarangLayout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txHargaJual, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(158, Short.MAX_VALUE))
         );
         PanelInputDataBarangLayout.setVerticalGroup(
@@ -197,6 +226,14 @@ public class UpdateDataBarang extends javax.swing.JFrame {
                 .addGroup(PanelInputDataBarangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txMerek, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
+                .addGap(18, 18, 18)
+                .addGroup(PanelInputDataBarangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txHargaBeli, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
+                .addGap(18, 18, 18)
+                .addGroup(PanelInputDataBarangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txHargaJual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -344,8 +381,12 @@ public class UpdateDataBarang extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    public javax.swing.JTextField txHargaBeli;
+    public javax.swing.JTextField txHargaJual;
     public javax.swing.JTextField txIDBarang;
     public javax.swing.JTextField txMerek;
     public javax.swing.JTextField txNamaBarang;

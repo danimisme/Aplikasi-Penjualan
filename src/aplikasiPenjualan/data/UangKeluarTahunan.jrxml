@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="245474d3-7e64-47f1-aca9-6a6ca32a1a0c">
+	<property name="ireport.zoom" value="1.4641000000000006"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="AlternativeRowColor">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style forecolor="#000000" backcolor="#EEEEEE"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="tahun" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT YEAR( tanggal ) AS tahun,
+MONTH( tanggal ) AS bulan,
+SUM(uangKeluar) as Uang_Keluar FROM aruskas 
+where year(tanggal) = $P{tahun}
+GROUP BY DATE_FORMAT( tanggal,'%Y-%m')]]>
+	</queryString>
+	<field name="tahun" class="java.lang.Integer"/>
+	<field name="bulan" class="java.lang.Integer"/>
+	<field name="Uang_Keluar" class="java.lang.Double"/>
+	<variable name="SUM" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{Uang_Keluar}]]></variableExpression>
+	</variable>
+	<variable name="NamaBulan" class="java.lang.String">
+		<variableExpression><![CDATA[$F{bulan}.equals(1) ? "Januari" :          $F{bulan}.equals(2) ? "Februari" :         $F{bulan}.equals(3) ? "Maret" :         $F{bulan}.equals(4) ? "April" :         $F{bulan}.equals(5) ? "Mei" :         $F{bulan}.equals(6) ? "Juni" :         $F{bulan}.equals(7) ? "Juli" :         $F{bulan}.equals(8) ? "Agustus" :         $F{bulan}.equals(9) ? "September" :         $F{bulan}.equals(10) ? "Oktober" :          $F{bulan}.equals(11) ? "November" : "Desember"]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="110" splitType="Stretch">
+			<staticText>
+				<reportElement x="152" y="79" width="312" height="20" uuid="c3e7d6cf-ffeb-40f6-97e7-f673dbafc575"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Telp : (021) 623 02395/ 96 Fax : 62302397]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="152" y="0" width="312" height="31" uuid="fa0c7a67-134f-4c9d-a7c6-636151740e8d"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NIRWANA KOMPUTINDO]]></text>
+			</staticText>
+			<image>
+				<reportElement x="49" y="0" width="88" height="82" uuid="f5f3c4f6-2bab-4d55-bfed-4dd40d75cd3a"/>
+				<imageExpression><![CDATA["C:\\Users\\msubh\\OneDrive\\Documents\\NetBeansProjects\\Sistem Penjualan\\src\\images\\logo-nk.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="152" y="41" width="312" height="18" uuid="9da176eb-7cd5-41aa-a3ef-eb45834dac19"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Mangga Dua Mall Lt. 4 Blok A No. 38]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="152" y="59" width="312" height="20" uuid="cdf82ae5-587b-425d-8a3b-5a2e2f849e06"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Jl. Mangga Dua Raya, Jakarta Pusat 10730]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="68" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="10" width="555" height="1" uuid="b168f444-fe41-4336-a5ac-e140ba479bdf"/>
+			</line>
+			<line>
+				<reportElement x="0" y="62" width="555" height="1" uuid="5a190ac7-aef2-4935-a3c5-04b5ce7ebf97"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="23" width="261" height="34" forecolor="#006699" backcolor="#006699" uuid="df983c58-d540-4112-91dd-1d0334f4f5ca"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REKAP PENGELUARAN TAHUNAN]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="16" width="555" height="1" uuid="8b003793-fe12-4e79-822b-48d4229bfc81"/>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="158" height="20" backcolor="#EEEEEE" uuid="8dd818c0-97c9-4d1e-a6ae-8c7cd05d2f29"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tahun]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="158" y="0" width="178" height="20" backcolor="#EEEEEE" uuid="45f04479-1150-4e72-b652-a7ff10ac85e4"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Bulan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="336" y="0" width="219" height="20" backcolor="#EEEEEE" uuid="5978b873-740c-4f92-8902-505fb7a89991"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pengeluran]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement style="AlternativeRowColor" mode="Opaque" x="0" y="0" width="158" height="20" uuid="288273a8-df26-4e30-b2db-7fe5539fa300"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tahun}]]></textFieldExpression>
+			</textField>
+			<textField pattern="Rp #,##0">
+				<reportElement style="AlternativeRowColor" mode="Opaque" x="336" y="0" width="219" height="20" uuid="5a017c85-82d5-4f91-b33e-b54c69a65194"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Uang_Keluar}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="AlternativeRowColor" mode="Opaque" x="158" y="0" width="178" height="20" uuid="c806fa43-7e27-4c49-a7f2-1ad0090e300b"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{NamaBulan}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="236" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="420" y="59" width="115" height="20" uuid="6e3f82bf-449d-4284-94af-608d1695e8c9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="365" y="85" width="172" height="114" uuid="ce7a9071-9ae4-46b3-b090-6d563aa4ff72"/>
+				<textElement textAlignment="Center">
+					<font size="13"/>
+				</textElement>
+				<text><![CDATA[Mengetahui,
+Kepala Toko]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="339" y="11" width="100" height="20" uuid="69cfc1da-1b54-4e99-9bec-eabe17ce320a"/>
+				<textElement>
+					<font fontName="Serif" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL :]]></text>
+			</staticText>
+			<textField pattern="Rp #,##0">
+				<reportElement x="439" y="11" width="100" height="20" uuid="432abb45-4583-4fb3-9d9a-21747971e3f9"/>
+				<textElement>
+					<font fontName="Serif" size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{SUM}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="377" y="59" width="64" height="20" uuid="1cb4914d-191e-4537-ab0c-05b9cac284b3"/>
+				<textElement>
+					<font size="13"/>
+				</textElement>
+				<text><![CDATA[Jakarta,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="365" y="209" width="172" height="27" uuid="33dc3766-c9b8-4677-934f-c5e2714ed185"/>
+				<textElement textAlignment="Center">
+					<font size="13" isBold="true" isItalic="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Nirwana  Komputindo]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

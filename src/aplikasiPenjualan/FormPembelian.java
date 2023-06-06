@@ -1,10 +1,11 @@
+package aplikasiPenjualan;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package aplikasiPenjualan;
 
+import aplikasiPenjualan.koneksi;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,16 +23,25 @@ public class FormPembelian extends javax.swing.JFrame {
     String Tanggal;
     private DefaultTableModel model;
     
+    public static String form;
+    
     public void totalBiaya(){
         int jumlahBaris = jTable1.getRowCount();
-        int totalBiaya = 0;
+        int subTotalBiaya = 0;
+        int ppn = 0;
+        int ongkir = Integer.parseInt(txOngkir.getText()) ;
+        int total = 0;
         int jumlahBarang, hargaBarang;
         for (int i = 0; i < jumlahBaris; i++) {
             jumlahBarang = Integer.parseInt(jTable1.getValueAt(i, 2).toString());
             hargaBarang = Integer.parseInt(jTable1.getValueAt(i, 3).toString());
-            totalBiaya = totalBiaya + (jumlahBarang * hargaBarang);
+            subTotalBiaya = subTotalBiaya + (jumlahBarang * hargaBarang);
+            ppn = (int) (subTotalBiaya*0.10) ;
+            total = subTotalBiaya + ppn + ongkir;
         }
-        txTotal.setText(String.valueOf(totalBiaya));
+        txSubTotal.setText(String.valueOf(subTotalBiaya));
+        txPpn.setText(String.valueOf(ppn));
+        txTotal.setText(String.valueOf(total)); 
     }
     
     private void autonumber(){
@@ -274,7 +284,6 @@ public class FormPembelian extends javax.swing.JFrame {
         txTanggal.setText(s.format(date));
         
         autonumber();
-        
     } 
 
     /**
@@ -307,18 +316,27 @@ public class FormPembelian extends javax.swing.JFrame {
         txJumlah = new javax.swing.JTextField();
         txHarga = new javax.swing.JTextField();
         btnTambah = new javax.swing.JButton();
+        btn_CariBarang = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         btnHapus = new javax.swing.JButton();
+        btnSimpan = new javax.swing.JButton();
+        btn_CariCust = new javax.swing.JButton();
         panelTotal = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
+        txSubTotal = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        txPpn = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
+        txOngkir = new javax.swing.JTextField();
         txTotal = new javax.swing.JTextField();
-        btnSimpan = new javax.swing.JButton();
+        jLabel14 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(204, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         panelJudul.setBackground(new java.awt.Color(255, 255, 255));
         panelJudul.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
@@ -341,17 +359,23 @@ public class FormPembelian extends javax.swing.JFrame {
             .addComponent(Judul)
         );
 
+        jPanel1.add(panelJudul, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 2, 996, -1));
+
         noBL.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         noBL.setText("No. Pembelian     :");
+        jPanel1.add(noBL, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 116, -1, -1));
 
         idSupp.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         idSupp.setText("ID Supplier         :");
+        jPanel1.add(idSupp, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 166, -1, -1));
 
         namaSupp.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         namaSupp.setText("Nama Supplier    :");
+        jPanel1.add(namaSupp, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 219, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel5.setText("Tanggal   :");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(642, 116, -1, -1));
 
         txNoBL.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txNoBL.addActionListener(new java.awt.event.ActionListener() {
@@ -359,6 +383,7 @@ public class FormPembelian extends javax.swing.JFrame {
                 txNoBLActionPerformed(evt);
             }
         });
+        jPanel1.add(txNoBL, new org.netbeans.lib.awtextra.AbsoluteConstraints(198, 113, 205, -1));
 
         txIDSupp.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txIDSupp.addActionListener(new java.awt.event.ActionListener() {
@@ -366,12 +391,15 @@ public class FormPembelian extends javax.swing.JFrame {
                 txIDSuppActionPerformed(evt);
             }
         });
+        jPanel1.add(txIDSupp, new org.netbeans.lib.awtextra.AbsoluteConstraints(197, 163, 205, -1));
 
         txNamaSupp.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txNamaSupp.setEnabled(false);
+        jPanel1.add(txNamaSupp, new org.netbeans.lib.awtextra.AbsoluteConstraints(196, 216, 205, -1));
 
         txTanggal.setBackground(new java.awt.Color(204, 255, 255));
         txTanggal.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jPanel1.add(txTanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(747, 113, 205, -1));
 
         panelInput.setBackground(new java.awt.Color(204, 255, 255));
         panelInput.setBorder(javax.swing.BorderFactory.createCompoundBorder(null, javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.lightGray, java.awt.Color.black)));
@@ -426,6 +454,13 @@ public class FormPembelian extends javax.swing.JFrame {
             }
         });
 
+        btn_CariBarang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cari-icon.png"))); // NOI18N
+        btn_CariBarang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_CariBarangActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelInputLayout = new javax.swing.GroupLayout(panelInput);
         panelInput.setLayout(panelInputLayout);
         panelInputLayout.setHorizontalGroup(
@@ -434,11 +469,14 @@ public class FormPembelian extends javax.swing.JFrame {
                 .addGap(27, 27, 27)
                 .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
-                    .addComponent(txIDBarang, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addGroup(panelInputLayout.createSequentialGroup()
+                        .addComponent(txIDBarang, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_CariBarang, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(27, 27, 27)
                 .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7)
-                    .addComponent(txNamaBarang, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txNamaBarang, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txJumlah, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -464,14 +502,18 @@ public class FormPembelian extends javax.swing.JFrame {
                     .addComponent(jLabel8)
                     .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txIDBarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txNamaBarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txJumlah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txHarga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnTambah))
+                .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txIDBarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txNamaBarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txJumlah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txHarga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnTambah))
+                    .addComponent(btn_CariBarang, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(34, Short.MAX_VALUE))
         );
+
+        jPanel1.add(panelInput, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 275, -1, -1));
 
         jTable1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -491,6 +533,8 @@ public class FormPembelian extends javax.swing.JFrame {
         jTable1.setRowHeight(24);
         jScrollPane1.setViewportView(jTable1);
 
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 418, 769, 209));
+
         btnHapus.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnHapus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/hapus-icon.png"))); // NOI18N
         btnHapus.setText("Hapus  ");
@@ -499,37 +543,7 @@ public class FormPembelian extends javax.swing.JFrame {
                 btnHapusActionPerformed(evt);
             }
         });
-
-        panelTotal.setBackground(new java.awt.Color(204, 255, 255));
-        panelTotal.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.white, java.awt.Color.black));
-
-        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel10.setText("Total         :");
-
-        txTotal.setBackground(new java.awt.Color(204, 255, 255));
-        txTotal.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txTotal.setEnabled(false);
-
-        javax.swing.GroupLayout panelTotalLayout = new javax.swing.GroupLayout(panelTotal);
-        panelTotal.setLayout(panelTotalLayout);
-        panelTotalLayout.setHorizontalGroup(
-            panelTotalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelTotalLayout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(jLabel10)
-                .addGap(27, 27, 27)
-                .addComponent(txTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(32, Short.MAX_VALUE))
-        );
-        panelTotalLayout.setVerticalGroup(
-            panelTotalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelTotalLayout.createSequentialGroup()
-                .addGap(5, 5, 5)
-                .addGroup(panelTotalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10)
-                    .addComponent(txTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        jPanel1.add(btnHapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(804, 418, -1, -1));
 
         btnSimpan.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnSimpan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/simpan-icon.png"))); // NOI18N
@@ -539,82 +553,59 @@ public class FormPembelian extends javax.swing.JFrame {
                 btnSimpanActionPerformed(evt);
             }
         });
+        jPanel1.add(btnSimpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 580, -1, -1));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelJudul, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(idSupp)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txIDSupp, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(namaSupp)
-                        .addGap(18, 18, 18)
-                        .addComponent(txNamaSupp, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(noBL)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txNoBL, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel5)
-                        .addGap(18, 18, 18)
-                        .addComponent(txTanggal, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(46, 46, 46))))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 769, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(panelTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnHapus)
-                    .addComponent(btnSimpan))
-                .addContainerGap(53, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(panelJudul, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(noBL)
-                    .addComponent(jLabel5)
-                    .addComponent(txNoBL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txTanggal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(idSupp)
-                            .addComponent(txIDSupp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(25, 25, 25)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(namaSupp)
-                            .addComponent(txNamaSupp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(31, 31, 31)
-                        .addComponent(panelInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnHapus)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(33, 33, 33)
-                        .addComponent(btnSimpan))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(panelTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(98, 98, 98))
-        );
+        btn_CariCust.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cari-icon.png"))); // NOI18N
+        btn_CariCust.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_CariCustActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_CariCust, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 150, 40, 40));
+
+        panelTotal.setBackground(new java.awt.Color(204, 255, 255));
+        panelTotal.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.white, java.awt.Color.black));
+        panelTotal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel10.setText("Sub Total         :");
+        panelTotal.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(31, 21, -1, -1));
+
+        txSubTotal.setBackground(new java.awt.Color(204, 255, 255));
+        txSubTotal.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        panelTotal.add(txSubTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(194, 18, 165, -1));
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel12.setText("Ppn                 :");
+        panelTotal.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(29, 58, 140, -1));
+
+        txPpn.setBackground(new java.awt.Color(204, 255, 255));
+        txPpn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        panelTotal.add(txPpn, new org.netbeans.lib.awtextra.AbsoluteConstraints(194, 55, 165, -1));
+
+        jLabel13.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel13.setText("Ongkos Kirim    :");
+        panelTotal.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 20, 140, -1));
+
+        txOngkir.setBackground(new java.awt.Color(204, 255, 255));
+        txOngkir.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txOngkir.setText("0");
+        txOngkir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txOngkirActionPerformed(evt);
+            }
+        });
+        panelTotal.add(txOngkir, new org.netbeans.lib.awtextra.AbsoluteConstraints(555, 20, 200, -1));
+
+        txTotal.setBackground(new java.awt.Color(204, 255, 255));
+        txTotal.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        panelTotal.add(txTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(555, 60, 200, -1));
+
+        jLabel14.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel14.setText("Total               :");
+        panelTotal.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 60, 140, -1));
+
+        jPanel1.add(panelTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 650, 800, 100));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -746,6 +737,24 @@ public class FormPembelian extends javax.swing.JFrame {
         txHarga.requestFocus();
     }//GEN-LAST:event_txJumlahActionPerformed
 
+    private void btn_CariBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_CariBarangActionPerformed
+        // TODO add your handling code here:
+        form = "pembelian";
+        FormPenjualan.form = "pembelian";
+        new ListDataBarang().setVisible(true);
+
+    }//GEN-LAST:event_btn_CariBarangActionPerformed
+
+    private void btn_CariCustActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_CariCustActionPerformed
+        // TODO add your handling code here:
+        new ListDataSupp().setVisible(true);
+    }//GEN-LAST:event_btn_CariCustActionPerformed
+
+    private void txOngkirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txOngkirActionPerformed
+        // TODO add your handling code here:
+        totalBiaya();
+    }//GEN-LAST:event_txOngkirActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -786,8 +795,13 @@ public class FormPembelian extends javax.swing.JFrame {
     private javax.swing.JButton btnHapus;
     private javax.swing.JButton btnSimpan;
     private javax.swing.JButton btnTambah;
+    private javax.swing.JButton btn_CariBarang;
+    private javax.swing.JButton btn_CariCust;
     private javax.swing.JLabel idSupp;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -801,13 +815,16 @@ public class FormPembelian extends javax.swing.JFrame {
     private javax.swing.JPanel panelInput;
     private javax.swing.JPanel panelJudul;
     private javax.swing.JPanel panelTotal;
-    private javax.swing.JTextField txHarga;
-    private javax.swing.JTextField txIDBarang;
-    private javax.swing.JTextField txIDSupp;
-    private javax.swing.JTextField txJumlah;
-    private javax.swing.JTextField txNamaBarang;
-    private javax.swing.JTextField txNamaSupp;
+    public static javax.swing.JTextField txHarga;
+    public static javax.swing.JTextField txIDBarang;
+    public static javax.swing.JTextField txIDSupp;
+    public static javax.swing.JTextField txJumlah;
+    public static javax.swing.JTextField txNamaBarang;
+    public static javax.swing.JTextField txNamaSupp;
     private javax.swing.JTextField txNoBL;
+    private javax.swing.JTextField txOngkir;
+    private javax.swing.JTextField txPpn;
+    private javax.swing.JTextField txSubTotal;
     private javax.swing.JTextField txTanggal;
     private javax.swing.JTextField txTotal;
     // End of variables declaration//GEN-END:variables

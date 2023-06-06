@@ -29,18 +29,19 @@ public class DataBarang extends javax.swing.JFrame {
             Statement s = c.createStatement();
             
             String sql = "SELECT * FROM barang ORDER BY IDBrg";
-            ResultSet r = s.executeQuery(sql);
+            ResultSet rs = s.executeQuery(sql);
             
-            while (r.next()) {
-                Object[] o = new Object[4];
-                o [0] = r.getString("IDbrg");
-                o [1] = r.getString("namaBrg");
-                o [2] = r.getString("jenis");
-                o [3] = r.getString("merek");
-                
-                model.addRow(o);
-            }
-            r.close();
+            while (rs.next()) {                
+                            model.addRow(new Object[]{
+                                rs.getString("IDBrg"),
+                                rs.getString("namaBrg"),
+//                                rs.getString(3),
+//                                rs.getString(4),
+//                                rs.getString(5),
+//                                rs.getString(6),
+                            });
+                        }
+            rs.close();
             s.close();
         } catch (Exception e) {
             System.out.println("terjadi kesalahan load data");
@@ -49,12 +50,8 @@ public class DataBarang extends javax.swing.JFrame {
     }
     
      public void cariData(){
-        DefaultTableModel tabel = new DefaultTableModel();
-        
-        tabel.addColumn("ID Barang");
-        tabel.addColumn("Nama Barang");
-        tabel.addColumn("Jenis");
-        tabel.addColumn("Merek");
+        model.getDataVector().removeAllElements();
+        model.fireTableDataChanged();
         
         try {
             Connection c = koneksi.getKoneksi();
@@ -63,18 +60,18 @@ public class DataBarang extends javax.swing.JFrame {
             Statement stat = c.createStatement();
             ResultSet rs = stat.executeQuery(sql);
             while (rs.next()) {                
-                tabel.addRow(new Object[]{
+                model.addRow(new Object[]{
                     rs.getString(1),
                     rs.getString(2),
                     rs.getString(3),
                     rs.getString(4),
+                    rs.getString(5),
+                    rs.getString(6),
                 });
             }
-            jTable1.setModel(tabel);
-            loadData();
+            jTable1.setModel(model);
         } catch (Exception e) {
             System.out.println("Cari Data Error"+e);
-        }finally{
         }
     }
 
@@ -93,6 +90,8 @@ public class DataBarang extends javax.swing.JFrame {
         model.addColumn("Nama Barang");
         model.addColumn("Jenis");
         model.addColumn("Merek");
+        model.addColumn("Harga Beli");
+        model.addColumn("Harga Jual");
         
         btnEdit.setEnabled(false);
         btnHapus.setEnabled(false);
@@ -173,6 +172,11 @@ public class DataBarang extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cari-icon.png"))); // NOI18N
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -370,6 +374,8 @@ public class DataBarang extends javax.swing.JFrame {
         String nama = (String) model.getValueAt(i, 1);
         String jenis = (String) model.getValueAt(i, 2);
         String merek = (String) model.getValueAt(i, 3);
+        String hargabeli = (String) model.getValueAt(i, 4);
+        String hargajual = (String) model.getValueAt(i, 5);
         
         UpdateDataBarang a = new UpdateDataBarang();
         a.setVisible(true);
@@ -378,6 +384,8 @@ public class DataBarang extends javax.swing.JFrame {
         a.txNamaBarang.setText(nama);
         a.cbJenis.setSelectedItem(jenis);
         a.txMerek.setText(merek);
+        a.txHargaBeli.setText(hargabeli);
+        a.txHargaJual.setText(hargajual);
         
     }//GEN-LAST:event_btnEditActionPerformed
 
@@ -426,6 +434,11 @@ public class DataBarang extends javax.swing.JFrame {
         // TODO add your handling code here:
         cariData();
     }//GEN-LAST:event_txCariKeyTyped
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        // TODO add your handling code here:
+        cariData();
+    }//GEN-LAST:event_jLabel2MouseClicked
 
     /**
      * @param args the command line arguments

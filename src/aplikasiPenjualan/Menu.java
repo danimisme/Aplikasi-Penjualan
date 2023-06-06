@@ -69,6 +69,7 @@ public class Menu extends javax.swing.JFrame {
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
+        jMenuItem14 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         jMenu6 = new javax.swing.JMenu();
 
@@ -143,6 +144,11 @@ public class Menu extends javax.swing.JFrame {
         jMenu7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/small-icon/money-2-24.png"))); // NOI18N
         jMenu7.setText("  Keuangan   ");
         jMenu7.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jMenu7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu7ActionPerformed(evt);
+            }
+        });
 
         jMenuItem11.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jMenuItem11.setText("Pemasukan Kas");
@@ -241,12 +247,21 @@ public class Menu extends javax.swing.JFrame {
         });
         jMenu4.add(jMenuItem9);
 
+        jMenuItem14.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jMenuItem14.setText("Laporan Rekap Tahunan");
+        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem14ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem14);
+
         jMenuBar1.add(jMenu4);
 
         jMenu5.setBackground(new java.awt.Color(255, 255, 255));
         jMenu5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED, java.awt.Color.lightGray, java.awt.Color.gray, java.awt.Color.black, java.awt.Color.gray));
         jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/small-icon/group-24.png"))); // NOI18N
-        jMenu5.setText("   Admin  ");
+        jMenu5.setText("   Pegawai  ");
         jMenu5.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jMenu5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -406,7 +421,7 @@ public class Menu extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (id_group == null || id_group.matches("System Admin|Manager")) {
             jDesktopPane1.removeAll();
-            Admin a = new Admin();
+            Pegawai a = new Pegawai();
             JInternalFrame internalframe = new JInternalFrame(judul, false, true, true);
             internalframe.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
             internalframe.setContentPane(a.getContentPane());
@@ -520,7 +535,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
         // TODO add your handling code here:
-        if (id_group == null || id_group.matches("System Admin|Manager|Staff Gudang")) {
+        if (id_group == null || id_group.matches("System Admin|Manager|Staff Keuangan")) {
             jDesktopPane1.removeAll();
             PemasukanKas a = new PemasukanKas();
             JInternalFrame internalframe = new JInternalFrame(judul, false, true, true);
@@ -539,7 +554,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
         // TODO add your handling code here:
-            if (id_group == null || id_group.matches("System Admin|Manager|Staff Gudang")) {
+            if (id_group == null || id_group.matches("System Admin|Manager|Staff Keuangan")) {
             jDesktopPane1.removeAll();
             PengeluaranKas a = new PengeluaranKas();
             JInternalFrame internalframe = new JInternalFrame(judul, false, true, true);
@@ -558,7 +573,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
         // TODO add your handling code here:
-            if (id_group == null || id_group.matches("System Admin|Manager|Staff Gudang")) {
+            if (id_group == null || id_group.matches("System Admin|Manager|Staff Keuangan")) {
             jDesktopPane1.removeAll();
             BukuKas a = new BukuKas();
             JInternalFrame internalframe = new JInternalFrame(judul, false, true, true);
@@ -574,6 +589,29 @@ public class Menu extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "akses dibatasi.");
         }
     }//GEN-LAST:event_jMenuItem13ActionPerformed
+
+    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
+        // TODO add your handling code here:
+                    if (id_group == null || id_group.matches("System Admin|Manager")) {
+            jDesktopPane1.removeAll();
+            LaporanRekapTahunan a = new LaporanRekapTahunan();
+            JInternalFrame internalframe = new JInternalFrame(judul, false, true, true);
+            internalframe.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+            internalframe.setContentPane(a.getContentPane());
+            internalframe.setLocation((jDesktopPane1.getWidth() - a.getWidth()) / 2, (jDesktopPane1.getHeight() - a.getHeight()) / 2);
+            internalframe.pack();
+
+            a.setLocationRelativeTo(this);
+            internalframe.setVisible(true);
+            jDesktopPane1.add(internalframe);
+        } else {
+            JOptionPane.showMessageDialog(null, "akses dibatasi.");
+        }
+    }//GEN-LAST:event_jMenuItem14ActionPerformed
+
+    private void jMenu7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu7ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenu7ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -625,6 +663,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
+    private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;

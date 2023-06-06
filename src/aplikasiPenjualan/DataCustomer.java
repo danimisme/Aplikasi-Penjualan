@@ -84,7 +84,6 @@ public class DataCustomer extends javax.swing.JFrame {
                 });
             }
             jTable1.setModel(tabel);
-            loadData();
         } catch (Exception e) {
             System.out.println("Cari Data Error"+e);
         }finally{

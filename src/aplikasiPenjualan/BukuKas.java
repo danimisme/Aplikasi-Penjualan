@@ -68,6 +68,7 @@ public class BukuKas extends javax.swing.JFrame {
         DateTimeFormatter monthFormatter = DateTimeFormatter.ofPattern("MM");
         String bulan = monthFormatter.format(Month.of(jMonthChooser1.getMonth() + 1));
         int bulanterakhir = Integer.parseInt(bulan) - 1;
+        int tahun = jYearChooser1.getYear();
         NumberFormat num=NumberFormat.getInstance();
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.getDataVector().removeAllElements();
@@ -89,7 +90,8 @@ public class BukuKas extends javax.swing.JFrame {
             
             
             
-            String saldoakhir = "SELECT SUM(uangMasuk-UangKeluar) AS saldoakhir FROM aruskas ";
+            String saldoakhir = "SELECT SUM(uangMasuk-UangKeluar) AS saldoakhir FROM aruskas "
+                    + "where month(tanggal) between '01' AND '" + bulan +"' AND year(tanggal) between '2021' AND '"+tahun+ "' ";
             ResultSet a = s.executeQuery(saldoakhir);
             if (a.next()){
                 int saldo = a.getInt("saldoakhir");
@@ -155,6 +157,7 @@ public class BukuKas extends javax.swing.JFrame {
         txSaldoAwal = new javax.swing.JTextField();
         txSaldoAkhir = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        jYearChooser1 = new com.toedter.calendar.JYearChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -243,6 +246,8 @@ public class BukuKas extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setText("Saldo Akhir :");
 
+        jYearChooser1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -253,7 +258,9 @@ public class BukuKas extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jMonthChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29)
+                        .addGap(44, 44, 44)
+                        .addComponent(jYearChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(jButton1)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 941, Short.MAX_VALUE)
@@ -273,11 +280,14 @@ public class BukuKas extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(panelJudul4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jMonthChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(panelJudul4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jMonthChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
+                            .addComponent(jYearChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jButton1))
                 .addGap(51, 51, 51)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
@@ -358,10 +368,6 @@ public class BukuKas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel Judul;
-    private javax.swing.JLabel Judul1;
-    private javax.swing.JLabel Judul2;
-    private javax.swing.JLabel Judul3;
     private javax.swing.JLabel Judul4;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
@@ -370,10 +376,7 @@ public class BukuKas extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JTable jTable1;
-    private javax.swing.JPanel panelJudul;
-    private javax.swing.JPanel panelJudul1;
-    private javax.swing.JPanel panelJudul2;
-    private javax.swing.JPanel panelJudul3;
+    private com.toedter.calendar.JYearChooser jYearChooser1;
     private javax.swing.JPanel panelJudul4;
     private javax.swing.JTextField txSaldoAkhir;
     private javax.swing.JTextField txSaldoAwal;
